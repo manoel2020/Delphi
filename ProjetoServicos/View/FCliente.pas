@@ -9,7 +9,7 @@ uses
   FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
   FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
   FireDAC.Comp.DataSet, FireDAC.Comp.Client,DateUtils, Vcl.Grids, Vcl.DBGrids,
-  Data.FMTBcd, Data.SqlExpr;
+  Data.FMTBcd, Data.SqlExpr, Datasnap.DBClient;
 
 type
   TFCCliente = class(TForm)
@@ -34,6 +34,7 @@ type
     btnSalvar: TSpeedButton;
     DBGrid1: TDBGrid;
     DataSource1: TDataSource;
+    ClientDataSet1: TClientDataSet;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnExcluirClick(Sender: TObject);
     procedure SpeedButton1Click(Sender: TObject);
@@ -72,25 +73,33 @@ begin
 end;
 
 procedure TFCCliente.btnSalvarClick(Sender: TObject);
-var
-  control_cliente: TPessoa;
+//var
+//  control_cliente: TPessoa;
 begin
    if(ComponentsObrigatorios(Self)) then
       Exit;
 
-   control_cliente := TPessoa.Create;
-   try
-      control_cliente.nome_pessoa := editNome.Text;
-      control_cliente.sexo := cbSexo.Items[cbSexo.ItemIndex];
-      control_cliente.dataNasc := editDataNasc.Text;
-      control_cliente.cpf_pessoa := editCpf.Text;
-      control_cliente.status_cad := 'A';
-      control_cliente.GravarPessoa(control_cliente);
-   finally
-      control_cliente.Free;
+//   control_cliente := TPessoa.Create;
+//   try
+    TPessoa
+       .New
+         .Setnome_pessoa(editNome.Text)
+         .setSexo(cbSexo.Items[cbSexo.ItemIndex])
+         .SetdataNasc(editDataNasc.Text)
+         .Setstatus_cad('A')
+       .GravarPessoa();
+
+//      control_cliente.nome_pessoa := editNome.Text;
+//      control_cliente.sexo := cbSexo.Items[cbSexo.ItemIndex];
+//      control_cliente.dataNasc := editDataNasc.Text;
+//      control_cliente.cpf_pessoa := editCpf.Text;
+//      control_cliente.status_cad := 'A';
+//      control_cliente.GravarPessoa();
+//   finally
+//      control_cliente.Free;
       LimpaComponentes(Panel3);
       editNome.SetFocus;
-   end;
+//   end;
 end;
 
 procedure TFCCliente.editDataNascExit(Sender: TObject);
@@ -112,6 +121,7 @@ begin
       Control_Cliente := TPessoa.Create;
       editCod.Text := IntToStr(Control_Cliente.proximoID);
       editNome.SetFocus;
+      Control_Cliente.AlimentaDbgrid(ClientDataSet1);
    finally
       FreeAndNil(Control_Cliente);
    end;

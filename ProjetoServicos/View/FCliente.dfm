@@ -66,70 +66,18 @@ object FCCliente: TFCCliente
       Height = 13
       Caption = 'CPF'
     end
-    object editCod: TEnterEdit
-      Left = 16
-      Top = 43
-      Width = 73
-      Height = 21
-      Alignment = taCenter
-      Enabled = False
-      TabOrder = 0
-      MudarCorEnter = clWindow
-    end
-    object editNome: TEnterEdit
-      Tag = 2
-      Left = 104
-      Top = 43
-      Width = 345
-      Height = 21
-      Alignment = taCenter
-      TabOrder = 1
-      MudarCorEnter = 13162455
-    end
     object cbSexo: TComboBox
       Left = 16
       Top = 107
       Width = 115
       Height = 21
-      TabOrder = 2
+      TabOrder = 0
       Text = 'Selecione'
       Items.Strings = (
         'Selecione'
         'Masculino'
         'Feminino'
         'N'#227'o Interessa!')
-    end
-    object editDataNasc: TEnterEdit
-      Tag = 2
-      Left = 145
-      Top = 107
-      Width = 96
-      Height = 21
-      Alignment = taCenter
-      TabOrder = 3
-      OnExit = editDataNascExit
-      MudarCorEnter = clWindow
-    end
-    object editIdade: TEnterEdit
-      Tag = 2
-      Left = 254
-      Top = 107
-      Width = 75
-      Height = 21
-      Alignment = taCenter
-      Enabled = False
-      TabOrder = 4
-      MudarCorEnter = clWindow
-    end
-    object editCpf: TEnterEdit
-      Tag = 2
-      Left = 342
-      Top = 107
-      Width = 107
-      Height = 21
-      Alignment = taCenter
-      TabOrder = 5
-      MudarCorEnter = 13162455
     end
     object Panel4: TPanel
       Left = 1
@@ -139,7 +87,7 @@ object FCCliente: TFCCliente
       Align = alBottom
       Color = clMenu
       ParentBackground = False
-      TabOrder = 6
+      TabOrder = 1
       DesignSize = (
         726
         43)
@@ -217,7 +165,14 @@ object FCCliente: TFCCliente
     TitleFont.Style = []
   end
   object DataSource1: TDataSource
-    Left = 608
-    Top = 376
+    DataSet = ClientDataSet1
+    Left = 640
+    Top = 528
+  end
+  object ClientDataSet1: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    Left = 592
+    Top = 360
   end
 end

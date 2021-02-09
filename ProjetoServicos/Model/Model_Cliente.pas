@@ -2,7 +2,8 @@ unit Model_Cliente;
 
 interface
    uses
-      ClienteClass,FireDAC.Comp.Client, System.SysUtils, Data.SqlExpr;
+      ClienteClass,FireDAC.Comp.Client, System.SysUtils, Data.SqlExpr,
+      Datasnap.Provider, Datasnap.DBClient;
 type
   TModel_Cliente = class
 
@@ -13,7 +14,7 @@ type
     function SalvarPessoa(Dados:TPessoa): Boolean;
     function ProximoID:integer;
     function deletarPessoa(Dados:Tpessoa):boolean;//exclussão Logica.
-    function TodosCliente:TSQLDataSet;
+    function TodosCliente:TClientDataSet;
   end;
 implementation
 
@@ -99,28 +100,28 @@ begin
    end;
 end;
 
-function TModel_Cliente.TodosCliente: TSQLDataSet;
+function TModel_Cliente.TodosCliente: TClientDataSet;
 var
    QueryPesquisa: TFDQuery;
    DataSetResult : TSQLDataSet;
+   fprovider: TDataSetProvider;
 begin
    AbrirConexaoBD;
    QueryPesquisa := TFDQuery.Create(nil);
-   QueryPesquisa.ConnectionName := 'Conectar';
-   with QueryPesquisa do
-   begin
-      Close;
-      SQL.Clear;
-      SQL.Add('SELECT * FROM PESSOA');
-      Open;
-      if not IsEmpty then
-      begin
-         DataSetResult := TSQLDataSet.Create(nil);
-         DataSetResult := QueryPesquisa;
-      end;
-      Close;
-      FecharConexaoBD;
+   fprovider := TDataSetProvider.Create(nil);
+   result := TClientDataSet.Create(nil);
+   result.SetProvider(fprovider);
+   fprovider.DataSet := QueryPesquisa;
+   try
+      QueryPesquisa.ConnectionName := 'Conectar';
+      QueryPesquisa.SQL.Add('SELECT * FROM PESSOA');
+      result.Open;
+   finally
+      fprovider.free;
+      QueryPesquisa.Close;
+      QueryPesquisa.Free;
    end;
+   FecharConexaoBD;
 end;
 
 end.
