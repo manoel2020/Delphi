@@ -1,0 +1,1 @@
+FastMM4 - Detecta se tem objetos aberto em memória.
