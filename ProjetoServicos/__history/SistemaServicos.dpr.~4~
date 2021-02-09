@@ -1,0 +1,25 @@
+program SistemaServicos;
+
+uses
+  Vcl.Forms,
+  FCEmpresa in 'View\FCEmpresa.pas' {Form2},
+  FCliente in 'View\FCliente.pas' {FCCliente},
+  FServicos in 'View\FServicos.pas' {FCServicos},
+  Geral in 'View\Geral.pas',
+  Unit1 in 'View\Unit1.pas' {FPrincipal},
+  ConexaoBD in 'ConexaoBD.pas' {DataModule2: TDataModule},
+  ClienteClass in 'Controller\ClienteClass.pas';
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFPrincipal, FPrincipal);
+  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TFCCliente, FCCliente);
+  Application.CreateForm(TFCServicos, FCServicos);
+  Application.CreateForm(TFPrincipal, FPrincipal);
+  Application.CreateForm(TDataModule2, DataModule2);
+  Application.Run;
+end.

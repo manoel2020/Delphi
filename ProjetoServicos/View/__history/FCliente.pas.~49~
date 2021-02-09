@@ -1,0 +1,126 @@
+unit FCliente;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Buttons,
+  EnterEditBackground, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client,DateUtils, Vcl.Grids, Vcl.DBGrids;
+
+type
+  TFCCliente = class(TForm)
+    Panel3: TPanel;
+    Panel1: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    Label3: TLabel;
+    editCod: TEnterEdit;
+    editNome: TEnterEdit;
+    Label4: TLabel;
+    cbSexo: TComboBox;
+    editDataNasc: TEnterEdit;
+    Label5: TLabel;
+    editIdade: TEnterEdit;
+    Label6: TLabel;
+    editCpf: TEnterEdit;
+    Label7: TLabel;
+    Panel4: TPanel;
+    SpeedButton1: TSpeedButton;
+    btnExcluir: TSpeedButton;
+    btnSalvar: TSpeedButton;
+    DBGrid1: TDBGrid;
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnExcluirClick(Sender: TObject);
+    procedure SpeedButton1Click(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+    procedure editDataNascExit(Sender: TObject);
+    procedure btnSalvarClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FCCliente: TFCCliente;
+
+implementation
+
+uses  Geral,ClienteClass, Unit1;
+{$R *.dfm}
+
+procedure TFCCliente.btnExcluirClick(Sender: TObject);
+var
+  control_cliente: TPessoa;
+begin
+   control_cliente := TPessoa.Create;
+   try
+      control_cliente.id_pessoa :- editCod.Text;
+      control_cliente.nome_pessoa := editNome.Text;
+      control_cliente.sexo := cbSexo.Items[cbSexo.ItemIndex];
+      control_cliente.dataNasc := editDataNasc.Text;
+      control_cliente.cpf_pessoa := editCpf.Text;
+      control_cliente.status_cad := 'A';
+      control_cliente.GravarPessoa(control_cliente);
+   finally
+      control_cliente.Free;
+      LimpaComponentes(Panel3);
+      editNome.SetFocus;
+   end;
+end;
+
+procedure TFCCliente.btnSalvarClick(Sender: TObject);
+var
+  control_cliente: TPessoa;
+begin
+   if(ComponentsObrigatorios(Self)) then
+      Exit;
+
+   control_cliente := TPessoa.Create;
+   try
+      control_cliente.nome_pessoa := editNome.Text;
+      control_cliente.sexo := cbSexo.Items[cbSexo.ItemIndex];
+      control_cliente.dataNasc := editDataNasc.Text;
+      control_cliente.cpf_pessoa := editCpf.Text;
+      control_cliente.status_cad := 'A';
+      control_cliente.GravarPessoa(control_cliente);
+   finally
+      control_cliente.Free;
+      LimpaComponentes(Panel3);
+      editNome.SetFocus;
+   end;
+end;
+
+procedure TFCCliente.editDataNascExit(Sender: TObject);
+begin
+   if(editDataNasc.Text<>'')then
+      editIdade.Text := IntToStr(YearsBetween(date,Strtodate(editDataNasc.Text))) + ' Anos '
+end;
+
+procedure TFCCliente.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+   FreeAndNil(Self);
+end;
+
+procedure TFCCliente.FormShow(Sender: TObject);
+var
+   Control_Cliente : TPessoa;
+begin
+   try
+      Control_Cliente := TPessoa.Create;
+      editCod.Text := IntToStr(Control_Cliente.proximoID);
+      editNome.SetFocus;
+   finally
+      FreeAndNil(Control_Cliente);
+   end;
+end;
+
+procedure TFCCliente.SpeedButton1Click(Sender: TObject);
+begin
+   Self.Free;
+end;
+
+end.

@@ -1,0 +1,90 @@
+object FPrincipal: TFPrincipal
+  Left = 0
+  Top = 0
+  Caption = 'Principal'
+  ClientHeight = 564
+  ClientWidth = 1093
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poMainFormCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Panel1: TPanel
+    Left = 0
+    Top = 41
+    Width = 145
+    Height = 523
+    Align = alLeft
+    TabOrder = 0
+    OnMouseEnter = Panel3MouseEnter
+    object CadUsuarios: TSpeedButton
+      Tag = 1
+      Left = 12
+      Top = 12
+      Width = 116
+      Height = 43
+      Caption = 'Usu'#225'rios'
+      Flat = True
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      OnClick = CadUsuariosClick
+    end
+    object SpeedButton7: TSpeedButton
+      Tag = 2
+      Left = 12
+      Top = 61
+      Width = 116
+      Height = 43
+      Caption = 'Clientes'
+      Flat = True
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+    end
+    object SpeedButton8: TSpeedButton
+      Left = 12
+      Top = 116
+      Width = 116
+      Height = 43
+      Caption = 'Sair'
+      Flat = True
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      OnClick = SpeedButton8Click
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Top = 0
+    Width = 1093
+    Height = 41
+    Align = alTop
+    Caption = 'Titulo do Que esta aberto na tela. Ex. Cadastro de Cliente'
+    TabOrder = 1
+  end
+  object PFundo: TPanel
+    Left = 145
+    Top = 41
+    Width = 948
+    Height = 523
+    Align = alClient
+    Caption = 'PFundo'
+    TabOrder = 2
+  end
+end
